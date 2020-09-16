@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_view_border"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="false"
+    app:cardCornerRadius="2dp">
+
+    <RelativeLayout
+        android:id="@+id/rv_rel_layout"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/card_view_border"
+        >
+
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_pic"
+
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp" />
+        <!--
+    <ImageView
+        android:id="@+id/profile_pic1"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="2dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+    -->
+
+        <RelativeLayout
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@+id/date"
+            android:layout_toEndOf="@+id/profile_pic">
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textFontWeight="600"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/tick_iv"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_below="@+id/name_tv"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/doubletickndicator" />
+
+            <TextView
+                android:id="@+id/latest_msg_tv"
+                android:layout_width="450dp"
+                android:layout_height="24dp"
+
+                android:layout_below="@+id/name_tv"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@id/tick_iv" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/no_of_msgs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="6dp"
+            android:background="@drawable/rounded_rectangle_grey"
+            android:textColor="#46AD6C"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

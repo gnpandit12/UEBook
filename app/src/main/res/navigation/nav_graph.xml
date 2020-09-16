@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/chatFragment">
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.r.uebook.ui.fragments.recentchat.RecentChatFragment"
+        android:label=" Recent Chats"
+        tools:layout="@layout/recent_chat_fragment" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatScreenFragment"
+            app:destination="@id/chatScreenFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_chatFragment_to_currentUserProfileFragment"
+            app:destination="@id/currentUserProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.r.uebook.ui.fragments.friends.FriendsFragment"
+        android:label=" Friends "
+        tools:layout="@layout/friends_fragment" >
+        <action
+            android:id="@+id/action_friendsFragment_to_chatScreenFragment"
+            app:destination="@id/chatScreenFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatScreenFragment"
+        android:name="com.r.uebook.ui.fragments.chatscreen.ChatScreenFragment"
+        android:label="ChatScreenFragment" >
+        <argument
+            android:name="friend"
+            app:argType="com.r.uebook.data.remote.model.Friend" />
+        <action
+            android:id="@+id/action_chatScreenFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_chatScreenFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/currentUserProfileFragment"
+        android:name="com.r.uebook.ui.fragments.userprofile.CurrentUserProfileFragment"
+        android:label="current_user_profile_fragment"
+        tools:layout="@layout/current_user_profile_fragment" >
+        <action
+            android:id="@+id/action_currentUserProfileFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <argument
+            android:name="current_user"
+            app:argType="com.r.uebook.data.remote.model.UserProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.r.uebook.ui.fragments.chatprofile.UserProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/user_profile_fragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_chatScreenFragment"
+            app:destination="@id/chatScreenFragment" />
+        <argument
+            android:name="friend_profile"
+            app:argType="com.r.uebook.data.remote.model.Friend" />
+    </fragment>
+</navigation>

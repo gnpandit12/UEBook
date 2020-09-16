@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/chatFragment"
+        android:icon="@drawable/conversation"
+        android:title="Chat"/>
+
+    <item
+        android:id="@+id/starred"
+        android:icon="@drawable/star"
+        android:title="Starred"/>
+
+    <item
+        android:id="@+id/camera"
+        android:icon="@drawable/camera"
+        android:title="Camera"/>
+
+    <item
+        android:id="@+id/calls"
+        android:icon="@drawable/phone"
+        android:title="Calls"
+        />
+
+    <item
+        android:id="@+id/friendsFragment"
+        android:icon="@drawable/contact"
+        android:title="Friends"/>
+
+</menu>

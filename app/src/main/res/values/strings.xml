@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">UEBook</string>
+    <string name="title_activity_splash_screen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="forward">forward</string>
+    <string name="delete">delete</string>
+    <string name="copy">copy</string>
+    <string name="starmsg">StarMsg</string>
+</resources>
