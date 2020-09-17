@@ -1,8 +1,10 @@
 package com.r.uebook.ui.fragments.chatscreen;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.r.uebook.BaseApplication;
 import com.r.uebook.R;
 import com.r.uebook.data.Repository.Repository;
@@ -46,6 +49,7 @@ import com.r.uebook.utils.AppUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -152,6 +156,7 @@ public class ChatScreenFragment extends Fragment {
                 public void onItemLongClick(int position, View view) {
                     enableActionMode(position);
                     adapter.toggleBackgroundColor(position, view, 1);
+
                 }
             });
         }
@@ -164,7 +169,12 @@ public class ChatScreenFragment extends Fragment {
                 @Override
                 public boolean onCreateActionMode(android.view.ActionMode actionMode, Menu menu) {
                     MenuInflater inflater = actionMode.getMenuInflater();
-                    inflater.inflate(R.menu.context_menu, menu);
+                    msgToBeDeleted = adapter.getMessage(position);
+                    if (null != getStaredMessage(msgToBeDeleted.getMsgId())){
+                        inflater.inflate(R.menu.context_menu, menu);
+                    }else {
+                        inflater.inflate(R.menu.star_message_menu, menu);
+                    }
                     return true;
                 }
 
@@ -178,7 +188,11 @@ public class ChatScreenFragment extends Fragment {
                     switch (menuItem.getItemId()) {
                         case R.id.star_message:
                             msgToBeDeleted = adapter.getMessage(position);
-                            starMessage(msgToBeDeleted.getMsg());
+                            if (null != getStaredMessage(msgToBeDeleted.getMsgId())){
+                                unStarMessage(msgToBeDeleted.getMsg(), msgToBeDeleted.getMsgId());
+                            }else {
+                                starMessage(msgToBeDeleted.getMsg(), msgToBeDeleted.getMsgId());
+                            }
                             return true;
                         case R.id.copy:
                             //logic for copy the message
@@ -236,14 +250,24 @@ public class ChatScreenFragment extends Fragment {
             }
         }
 
+    private void unStarMessage(String msg, String msgId) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(null);
+        editor.putString(msgId, json);
+        editor.apply();
+    }
 
-        private void starMessage(String message){
+
+    private void starMessage(String message, String messageID){
 
         class StarMessageAsyncTask extends AsyncTask<Void, Void, Void>{
 
             @Override
             protected Void doInBackground(Void... voids) {
                 StaredMessage staredMessage = new StaredMessage();
+                staredMessage.setMessageID(messageID);
                 staredMessage.setMessage(message);
                 DatabaseClient.getInstance(getActivity().getApplicationContext()).getAppDatabase()
                         .staredMessageDao()
@@ -267,7 +291,26 @@ public class ChatScreenFragment extends Fragment {
         }
         StarMessageAsyncTask starMessageAsyncTask = new StarMessageAsyncTask();
         starMessageAsyncTask.execute();
+
+        // ------------------------------------
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = prefs.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(message);
+            editor.putString(messageID, json);
+            editor.apply();
+
+
         }
+
+
+    public HashMap<String, String> getStaredMessage(String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Gson gson = new Gson();
+        String json = prefs.getString(key, null);
+        java.lang.reflect.Type type = new TypeToken<HashMap<String, String>>(){}.getType();
+        return gson.fromJson(json, type);
+    }
 
     private void initViews(View view) {
         gson = new Gson();
